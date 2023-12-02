@@ -1,0 +1,106 @@
+Integer Z_POS
+Function pickandplacefachero
+	Tool 1
+    Go P24 /15
+For Z_POS = 0 To 2
+		Pickcu()
+		Placecufix()
+		Placetraycu()
+Next Z_POS
+For Z_POS = 0 To 2
+		Pickcir()
+		Placecircufix()
+		Placetraycir()
+Next Z_POS
+For Z_POS = 0 To 2
+		Picktraycir()
+		Placecir()
+Next Z_POS
+For Z_POS = 0 To 2
+		Picktraycu()
+		Placecu()
+Next Z_POS
+Go P24 /15
+Fend
+Function Pickcu
+	Go pickcuadrado +Z(20) /15
+	Move pickcuadrado -Z(Z_POS * 6) /15
+	On 8
+	Wait 0.5
+	Move pickcuadrado +Z(20) +Y(5) +X(5) /15
+Fend
+Function Placecufix
+	Go placecuafix +Z(10) /15
+	Move placecuafix /15
+	Off 8
+	Move placecuafix -Y(9) /15
+    Move placecuafix -Y(9) -X(9) /15
+    Move placecuafix +Z(10) -Y(9) -X(9) /15
+	Move pickcuafix +Z(10) /15
+	Move pickcuafix /15
+	On 8
+	Move pickcuafix +Z(10) /15
+Fend
+Function Pickcir
+	Go pickcirculo +Z(10) /15
+	Move pickcirculo -Z(Z_POS * 6) /15
+	On 8
+	Wait 0.5
+	Move pickcirculo +Z(10) /15
+Fend
+Function Placecircufix
+	Go placecirfix +Z(10) /15
+	Move placecirfix /15
+	Off 8
+	Move placecirfix -Y(9) /15
+	Move pickcirfix +Z(10) /15
+	Move pickcirfix /15
+	On 8
+	Move pickcirfix +Z(10) /15
+Fend
+Function Placetraycu
+	Go placetrayorigin +Z(30) +X(Z_POS * 30) /15
+	Move placetrayorigin +X(Z_POS * 30) /15
+	Off 8
+	Wait 0.5
+	Move placetrayorigin +Z(30) +X(Z_POS * 30) /15
+	
+Fend
+Function Placetraycir
+	Go placetrayorigin +Z(30) +Y(30) +X(Z_POS * 30) /15
+	Move placetrayorigin +Y(30) +X(Z_POS * 30) /15
+	Off 8
+	Wait 0.5
+	Move placetrayorigin +Z(30) +Y(30) +X(Z_POS * 30) /15
+	
+Fend
+Function Picktraycu
+	Go placetrayorigin +Z(30) +X(Z_POS * 30) /15
+	Move placetrayorigin -Z(4) +X(Z_POS * 30) /15
+	On 8
+	Wait 0.5
+	Move placetrayorigin +Z(30) +X(Z_POS * 30) /15
+	
+Fend
+Function Picktraycir
+	Go placetrayorigin +Z(30) +Y(30) +X(Z_POS * 30) /15
+	Move placetrayorigin +Y(30) -Z(4) +X(Z_POS * 30) /15
+	On 8
+	Wait 0.5
+	Move placetrayorigin +Z(30) +Y(30) +X(Z_POS * 30) /15
+	
+Fend
+Function Placecu
+	Go pickcuadrado +Z(20) +Y(5) +X(5) /15
+	Move pickcuadrado -Z(12) +Z(Z_POS * 6) /15
+	Off 8
+	Wait 0.5
+	Move pickcuadrado +Z(20) /15
+Fend
+Function Placecir
+	Go pickcirculo +Z(20) +Y(5) /15
+	Move pickcirculo -Z(12) +Z(Z_POS * 6) /15
+	Off 8
+	Wait 0.5
+	Move pickcirculo +Z(20) /15
+Fend

@@ -1,0 +1,48 @@
+Integer X_POS
+Integer Y_POS
+Integer n
+Function stackfachero
+	Tool 1
+	Go initialpnt
+	Speed 100
+	SpeedS 500
+	
+n = 0
+For X_POS = 0 To 2
+	For Y_POS = 0 To 1
+			Pick2()
+			Place3()
+			n = n + 1
+	Next Y_POS
+Next X_POS
+For X_POS = 0 To 2
+	For Y_POS = 0 To 1
+			Pick5()
+			Place3()
+			n = n + 1
+	Next Y_POS
+Next X_POS
+Go initialpnt
+Fend
+Function Pick2
+	Go origenlocal1 +Z(4.823) +X(308.020) +Y(49.127) +Z(30) +X(X_POS * 30) +Y(Y_POS * 30) /15
+	Move origenlocal1 +Z(4.823) +X(308.020) +Y(49.127) +X(X_POS * 30) +Y(Y_POS * 30) /15
+	On 8
+	Wait 0.5
+	Move origenlocal1 +Z(4.823) +X(308.020) +Y(49.127) +Z(30) +X(X_POS * 30) +Y(Y_POS * 30) /15
+Fend
+Function Place3
+    Go origenlocal1 +Z(11.851) +X(122.188) +Y(100.019) +Z(30) +Z(n * 6) /15
+	Move origenlocal1 +Z(13.851) +X(122.188) +Y(100.019) +Z(n * 6) /15
+	Off 8
+	Wait 0.5
+	Move origenlocal1 +Z(11.851) +X(122.188) +Y(100.019) +Z(30) +Z(n * 6) /15
+	
+Fend
+Function Pick5
+	Go origenlocal1 +Z(1.806) +X(180.541) +Y(49.220) +Z(30) +X(X_POS * 30) +Y(Y_POS * 30) /15
+	Move origenlocal1 +Z(1.806) +X(180.541) +Y(49.220) +X(X_POS * 30) +Y(Y_POS * 30) /15
+	On 8
+	Wait 0.5
+	Move origenlocal1 +Z(1.806) +X(180.541) +Y(49.220) +Z(30) +X(X_POS * 30) +Y(Y_POS * 30) /15
+Fend
