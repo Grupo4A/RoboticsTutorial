@@ -7,12 +7,25 @@ Integer ts
 Integer bs
 Integer token(3)
 Integer block(3)
+Integer token_random(3)
+Integer block_random(3)
 
 Function main
 inicio:
-Wait Sw(0) = Off
-Wait Sw(0) = On
+Motor On
+Power High
+Speed 30
+Accel 30, 30
+SpeedS 500
+AccelS 5000
 Go P24 /15
+Wait Sw(0) = Off
+Do While Sw(0) = Off And Sw(1) = Off
+	If Sw(2) = On Then
+		GoTo random
+	EndIf
+Loop
+If Sw(0) = On Then
 Xqt task3
 Do While Sw(0) = On And Sw(7) = Off
 	If Sw(4) = On Then
@@ -26,6 +39,12 @@ Off 8
 Wait 5
 Go P24 /15
 GoTo inicio
+EndIf
+reverse
+GoTo inicio
+random:
+random1
+GoTo inicio
 Fend
 
 Function task3
@@ -33,12 +52,8 @@ bs = 0
 ts = 0
 blockheight = 6
 tokenheight = 6
-Motor On
-Power High
-Speed 30
-Accel 30, 30
-SpeedS 500
-AccelS 5000
+
+
 Tool 1
 Go P24 /15
 check
@@ -61,74 +76,82 @@ For c = 0 To canttoken - 1
 		Print ts
 	EndIf
 Next c
-For c = 0 To 2
+For c = 0 To 10
+		If token(0) = 1 Or token(1) = 1 Or token(2) = 1 Then
 		Picktraycir3()
 		Placecir3()
+		EndIf
 Next c
-For c = 0 To 2
+For c = 0 To 10
+		If block(0) = 1 Or block(1) = 1 Or block(2) = 1 Then
 		Picktraycu3()
 		Placecu3()
+		EndIf
 Next c
 Go P24 /15
 Fend
 Function Pickcu3
-	Go pickcuadrado -Z(18) +Z(cantblock * blockheight) +Z(20) /15
-	Move pickcuadrado -Z(18) +Z(cantblock * blockheight) -Z(c * 6) /15
+	Go pickcuadrado +Z(50) /15 CP
+	Move pickcuadrado -Z(18) +Z(cantblock * blockheight) -Z(c * 6) /15 CP
 	On 8
 	Wait 0.5
-	Move pickcuadrado +Z(20) -Z(18) +Z(cantblock * blockheight) +Y(5) +X(5) /15
+	Move pickcuadrado +Z(50) +Y(5) +X(5) /15
 Fend
 Function Placecufix3
-    Go placecuafix +Z(10) /15
+    Go placecuafix +Z(20) /15
 	Move placecuafix /15
 	Off 8
-	Move placecuafix -Y(9) /15
-    Move placecuafix -Y(9) -X(9) /15
-    Move placecuafix +Z(10) -Y(9) -X(9) /15
-	Move pickcuafix +Z(10) /15
+	Move pickcuafix +Z(20) /15
+	On 10
+	Wait 1
+	Off 10
+	Wait 1
 	Move pickcuafix /15
 	On 8
-	Move pickcuafix +Z(10) /15
+	Move pickcuafix +Z(20) /15
 Fend
 Function Pickcir3
-	Go pickcirculo -Z(18) +Z(canttoken * tokenheight) +Z(10) /15
-	Move pickcirculo -Z(18) +Z(canttoken * tokenheight) -Z(c * 6) /15
+	Go pickcirculo +Z(50) /15
+	Move pickcirculo -Z(16) +Z(canttoken * tokenheight) -Z(c * 6) /15
 	On 8
 	Wait 0.5
-	Move pickcirculo -Z(18) +Z(canttoken * tokenheight) +Z(10) /15
+	Move pickcirculo +Z(50) /15
 Fend
 Function Placecircufix3
-	Go placecirfix +Z(10) /15
+	Go placecirfix +Z(20) /15
 	Move placecirfix /15
 	Off 8
-	Move placecirfix -Y(9) /15
-	Move pickcirfix +Z(10) /15
+	Move pickcirfix +Z(20) /15
+	On 9
+	Wait 1
+	Off 9
+	Wait 1
 	Move pickcirfix /15
 	On 8
-	Move pickcirfix +Z(10) /15
+	Move pickcirfix +Z(20) /15
 Fend
 Function Placetraycu3
 	If block(0) = 0 Then
-		Go placetrayorigin +Z(30) /15
-		Move placetrayorigin /15
+		Go placetrayorigin +Z(30) /15 CP
+		Move placetrayorigin /15 CP
 		Off 8
 		Wait 0.5
-		Move placetrayorigin +Z(30) /15
+		Move placetrayorigin +Z(50) /15
 		block(0) = 1
 	Else
 		If block(1) = 0 Then
-		Go placetrayorigin +Z(30) +X(30) /15
-		Move placetrayorigin +X(30) /15
+		Go placetrayorigin +Z(30) +X(30) /15 CP
+		Move placetrayorigin +X(30) /15 CP
 		Off 8
 		Wait 0.5
-		Move placetrayorigin +Z(30) +X(30) /15
+		Move placetrayorigin +Z(50) +X(30) /15
 		block(1) = 1
 		Else
-			Go placetrayorigin +Z(30) +X(60) /15
-			Move placetrayorigin +X(60) /15
+			Go placetrayorigin +Z(30) +X(60) /15 CP
+			Move placetrayorigin +X(60) /15 CP
 			Off 8
 			Wait 0.5
-			Move placetrayorigin +Z(30) +X(60) /15
+			Move placetrayorigin +Z(50) +X(60) /15
 			block(2) = 1
 		EndIf
 	EndIf
@@ -137,26 +160,26 @@ Function Placetraycu3
 Fend
 Function Placetraycir3
 	If token(0) = 0 Then
-		Go placetrayorigin +Z(30) +Y(30) /15
-		Move placetrayorigin +Y(30) /15
+		Go placetrayorigin +Z(30) +Y(30) /15 CP
+		Move placetrayorigin +Y(30) /15 CP
 		Off 8
 		Wait 0.5
-		Move placetrayorigin +Z(30) +Y(30) /15
+		Move placetrayorigin +Z(50) +Y(30) /15
 		token(0) = 1
 	Else
 		If token(1) = 0 Then
-			Go placetrayorigin +Z(30) +Y(30) +X(30) /15
-			Move placetrayorigin +Y(30) +X(30) /15
+			Go placetrayorigin +Z(30) +Y(30) +X(30) /15 CP
+			Move placetrayorigin +Y(30) +X(30) /15 CP
 			Off 8
 			Wait 0.5
-			Move placetrayorigin +Z(30) +Y(30) +X(30) /15
+			Move placetrayorigin +Z(50) +Y(30) +X(30) /15
 			token(1) = 1
 		Else
-			Go placetrayorigin +Z(30) +Y(30) +X(60) /15
-			Move placetrayorigin +Y(30) +X(60) /15
+			Go placetrayorigin +Z(30) +Y(30) +X(60) /15 CP
+			Move placetrayorigin +Y(30) +X(60) /15 CP
 			Off 8
 			Wait 0.5
-			Move placetrayorigin +Z(30) +Y(30) +X(60) /15
+			Move placetrayorigin +Z(50) +Y(30) +X(60) /15
 			token(2) = 1
 		EndIf
 	EndIf
@@ -164,62 +187,65 @@ Function Placetraycir3
 Fend
 Function Picktraycu3
 	MemOff 8
-	Go placetrayorigin +Z(30) +X(c * 30) /15
-	Move placetrayorigin -Z(4) +X(c * 30) /15
+	Go placetrayorigin +Z(30) +X(c * 30) /15 CP
+	Move placetrayorigin -Z(4) +X(c * 30) /15 CP
 	On 8
 	Wait 0.5
-	Move placetrayorigin +Z(30) +X(c * 30) /15
+	Move placetrayorigin +Z(50) +X(c * 30) /15
+	block(c) = 0
 	
 Fend
 Function Picktraycir3
 	MemOff 8
-	Go placetrayorigin +Z(30) +Y(30) +X(c * 30) /15
-	Move placetrayorigin +Y(30) -Z(4) +X(c * 30) /15
+	Go placetrayorigin +Z(30) +Y(30) +X(c * 30) /15 CP
+	Move placetrayorigin +Y(30) -Z(4) +X(c * 30) /15 CP
 	On 8
 	Wait 0.5
-	Move placetrayorigin +Z(30) +Y(30) +X(c * 30) /15
+	Move placetrayorigin +Z(50) +Y(30) +X(c * 30) /15
+	token(c) = 0
 	
 Fend
 Function Placecu3
-	Go pickcuadrado -Z(12) +Z((cantblock - bs) * blockheight) +Z(20) +Y(5) +X(5) /15
-	Move pickcuadrado -Z(12) +Z((cantblock - bs) * blockheight) +Z(c * 6) /15
+	Go fincu +Z(50) +Y(5) +X(5) /15 CP
+	Move fincu -Z(10) +Z((cantblock - bs) * blockheight) +Z(c * 6) /15
 	Off 8
 	Wait 0.5
-	Move pickcuadrado -Z(12) +Z((cantblock - bs) * blockheight) +Z(20) /15
+	Move fincu +Z(50) /15
 Fend
 Function Placecir3
-	Go pickcirculo -Z(12) +Z((cantblock - bs) * blockheight) +Z(20) +Y(5) /15
-	Move pickcirculo -Z(12) +Z((cantblock - bs) * blockheight) +Z(c * 6) /15
+    Go pickcirculo +Z(50) +Y(5) /15 CP
+	Move pickcirculo -Z(10) +Z((canttoken - ts) * tokenheight) +Z(c * 6) /15
 	Off 8
 	Wait 0.5
-	Move pickcirculo -Z(12) +Z((cantblock - bs) * blockheight) +Z(20) /15
+	Move pickcirculo +Z(50) /15
+	
 Fend
 Function check
 blockheight = 6
 tokenheight = 6
 Integer n
 n = 0
-Go pickcuadrado +Z(20) +Z(blockheight * 3) /15
+Go pickcuadrado +Z(20) +Z(blockheight * 3) /15 CP
 On 8
 Do While Sw(17) = 0
-	Move pickcuadrado +Z(20) +Z(blockheight * 3) -Z(n) /15
+	Move pickcuadrado +Z(20) +Z(blockheight * 3) -Z(n) /15 CP
 	n = n + 1
 Loop
 Off 8
-cantblock = (38 + blockheight * 3 - n) / blockheight
+cantblock = (38 + blockheight * 4 - n) / blockheight
 Print cantblock
-Go pickcuadrado +Z(20) +Z(blockheight * 3) /15
-Go pickcirculo +Z(20) +Z(blockheight * 3) /15
+Go pickcuadrado +Z(20) +Z(blockheight * 3) /15 CP
+Go pickcirculo +Z(20) +Z(blockheight * 3) /15 CP
 On 8
 n = 0
 Do While Sw(17) = 0
-	Move pickcirculo +Z(20) +Z(tokenheight * 3) -Z(n) /15
+	Move pickcirculo +Z(20) +Z(tokenheight * 3) -Z(n) /15 CP
 	n = n + 1
 Loop
 Off 8
 canttoken = (38 + tokenheight * 3 - n) / tokenheight
 Print canttoken
-Go pickcirculo +Z(20) +Z(tokenheight * 3) /15
+Go pickcirculo +Z(20) +Z(tokenheight * 3) /15 CP
 For c = 0 To 2
 		checktraycu3()
 Next c
@@ -229,22 +255,204 @@ Next c
 Fend
 Function checktraycu3
 	On 8
-    Go placetrayorigin +Z(30) +X(c * 30) /15
-	Move placetrayorigin +X(c * 30) /15
+    Go placetrayorigin +Z(30) +X(c * 30) /15 CP
+	Move placetrayorigin +X(c * 30) /15 CP
 	Wait 0.5
 	block(c) = Sw(17)
 	Off 8
-	Move placetrayorigin +Z(30) +X(c * 30) /15
+	Move placetrayorigin +Z(30) +X(c * 30) /15 CP
 	Print block(c)
 	Fend
-	Function checktraycir3
+Function checktraycir3
 	On 8
-	Go placetrayorigin +Z(30) +Y(30) +X(c * 30) /15
-	Move placetrayorigin +Y(30) -Z(4) +X(c * 30) /15
+	Go placetrayorigin +Z(30) +Y(30) +X(c * 30) /15 CP
+	Move placetrayorigin +Y(30) +X(c * 30) /15 CP
 	Wait 0.5
 	token(c) = Sw(17)
 	Off 8
-	Move placetrayorigin +Z(30) +Y(30) +X(c * 30) /15
+	Move placetrayorigin +Z(30) +Y(30) +X(c * 30) /15 CP
 	Print token(c)
 	Fend
+Function reverse
+	check
+	For c = 0 To 2
+		If block(0) = 1 Or block(1) = 1 Or block(2) = 1 Then
+		revtraycu3()
+		Placecu3()
+		EndIf
+	Next c
+	For c = 0 To 2
+		If token(0) = 1 Or token(1) = 1 Or token(2) = 1 Then
+		revtraycir3()
+		Placecir3()
+		EndIf
+	Next c
+
+Fend
+Function revtraycir3
+If token(0) = 1 Then
+	Go placetrayorigin +Z(30) +Y(30) /15 CP
+	Move placetrayorigin +Y(30) /15 CP
+	On 8
+	Wait 0.5
+	Move placetrayorigin +Z(50) +Y(30) /15
+	token(0) = 0
+Else
+	If token(1) = 1 Then
+		Go placetrayorigin +Z(30) +Y(30) +X(30) /15 CP
+		Move placetrayorigin +Y(30) +X(30) /15 CP
+		On 8
+		Wait 0.5
+		Move placetrayorigin +Z(50) +Y(30) +X(30) /15
+		token(1) = 0
+	Else
+		Go placetrayorigin +Z(30) +Y(30) +X(60) /15 CP
+        Move placetrayorigin +Y(30) +X(60) /15 CP
+		On 8
+		Wait 0.5
+		Move placetrayorigin +Z(50) +Y(30) +X(60) /15
+		token(2) = 0
+	EndIf
+EndIf
+	
+Fend
+Function revtraycu3
+If block(0) = 1 Then
+	Go placetrayorigin +Z(30) /15 CP
+	Move placetrayorigin /15 CP
+	On 8
+	Wait 0.5
+	Move placetrayorigin +Z(50) /15
+	block(0) = 0
+Else
+	If block(1) = 1 Then
+		Go placetrayorigin +Z(30) +X(30) /15 CP
+		Move placetrayorigin +X(30) /15 CP
+		On 8
+		Wait 0.5
+		Move placetrayorigin +Z(50) +X(30) /15
+		block(1) = 0
+	Else
+		Go placetrayorigin +Z(30) +X(60) /15 CP
+		Move placetrayorigin +X(60) /15 CP
+		On 8
+		Wait 0.5
+		Move placetrayorigin +Z(50) +X(60) /15
+		block(2) = 0
+	EndIf
+EndIf
+	
+Fend
+Function random1
+  Integer randNum
+  Randomize
+  Integer n
+For n = 0 To 2
+  randNum = Int(Rnd(2))
+  block_random(n) = randNum
+  Print block_random(n)
+Next
+For n = 0 To 2
+  randNum = Int(Rnd(2))
+  token_random(n) = randNum
+  Print token_random(n)
+Next
+check_random
+For c = 0 To 2
+		If block_random(0) = 1 Or block_random(1) = 1 Or block_random(2) = 1 Then
+		Pickcu3()
+		Placecufix3()
+		rndPlacetraycu3()
+		EndIf
+	Next c
+	For c = 0 To 2
+		If token_random(0) = 1 Or token_random(1) = 1 Or token_random(2) = 1 Then
+		Pickcir3()
+		Placecircufix3()
+		rndPlacetraycir3()
+		EndIf
+	Next c
+
+Fend
+Function check_random
+blockheight = 6
+tokenheight = 6
+Integer n
+n = 0
+Go pickcuadrado +Z(20) +Z(blockheight * 3) /15 CP
+On 8
+Do While Sw(17) = 0
+	Move pickcuadrado +Z(20) +Z(blockheight * 3) -Z(n) /15 CP
+	n = n + 1
+Loop
+Off 8
+cantblock = (38 + blockheight * 4 - n) / blockheight
+Print cantblock
+Go pickcuadrado +Z(20) +Z(blockheight * 3) /15 CP
+Go pickcirculo +Z(20) +Z(blockheight * 3) /15 CP
+On 8
+n = 0
+Do While Sw(17) = 0
+	Move pickcirculo +Z(20) +Z(tokenheight * 3) -Z(n) /15 CP
+	n = n + 1
+Loop
+Off 8
+canttoken = (38 + tokenheight * 3 - n) / tokenheight
+Print canttoken
+Fend
+Function rndPlacetraycu3
+	If block_random(0) = 1 Then
+		Go placetrayorigin +Z(30) /15 CP
+		Move placetrayorigin /15 CP
+		Off 8
+		Wait 0.5
+		Move placetrayorigin +Z(50) /15
+		block_random(0) = 0
+	Else
+		If block_random(1) = 1 Then
+		Go placetrayorigin +Z(30) +X(30) /15 CP
+		Move placetrayorigin +X(30) /15 CP
+		Off 8
+		Wait 0.5
+		Move placetrayorigin +Z(50) +X(30) /15
+		block_random(1) = 0
+		Else
+			Go placetrayorigin +Z(30) +X(60) /15 CP
+			Move placetrayorigin +X(60) /15 CP
+			Off 8
+			Wait 0.5
+			Move placetrayorigin +Z(50) +X(60) /15
+			block_random(2) = 0
+		EndIf
+	EndIf
+		
+	
+Fend
+Function rndPlacetraycir3
+	If token_random(0) = 1 Then
+		Go placetrayorigin +Z(30) +Y(30) /15 CP
+		Move placetrayorigin +Y(30) /15 CP
+		Off 8
+		Wait 0.5
+		Move placetrayorigin +Z(50) +Y(30) /15
+		token_random(0) = 0
+	Else
+		If token_random(1) = 1 Then
+			Go placetrayorigin +Z(30) +Y(30) +X(30) /15 CP
+			Move placetrayorigin +Y(30) +X(30) /15 CP
+			Off 8
+			Wait 0.5
+			Move placetrayorigin +Z(50) +Y(30) +X(30) /15
+			token_random(1) = 0
+		Else
+			Go placetrayorigin +Z(30) +Y(30) +X(60) /15 CP
+			Move placetrayorigin +Y(30) +X(60) /15 CP
+			Off 8
+			Wait 0.5
+			Move placetrayorigin +Z(50) +Y(30) +X(60) /15
+			token_random(2) = 0
+		EndIf
+	EndIf
+	
+Fend
 
