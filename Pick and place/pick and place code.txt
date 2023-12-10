@@ -1,0 +1,116 @@
+Integer Z_POS
+Integer tokenheight
+Integer blockheight
+Function pickandplacefacheros
+Motor On
+Power High
+Speed 30
+Accel 30, 30
+SpeedS 500
+AccelS 5000
+tokenheight = 6
+blockheight = 6
+Tool 1
+Go P24 /15 CP
+	For Z_POS = 0 To 2
+		Pickcus()
+		Placecufixs()
+		Placetraycus()
+	Next Z_POS
+	For Z_POS = 0 To 2
+		Pickcirs()
+		Placecircufixs()
+		Placetraycirs()
+	Next Z_POS
+	For Z_POS = 0 To 2
+		Picktraycirs()
+		Placecirs()
+	Next Z_POS 
+	For Z_POS = 0 To 2
+		Picktraycus()
+		Placecus()
+	Next Z_POS
+Go P24 /15 CP
+Fend
+Function Pickcus
+	Go pickcuadrado +Z(20) /15 CP
+	Move pickcuadrado -Z(Z_POS * blockheight) +Z(2) /15
+	On 8
+	Wait 0.1
+	Move pickcuadrado +Z(20) +Y(5) +X(5) /15 CP
+Fend
+Function Placecufixs
+	Go placecuafix +Z(10) +Z(1) /15 CP
+	Move placecuafix +Z(2) /15
+	Off 8
+	Wait 0.1
+	Move placecuafix -Y(9) +Z(1) /15
+    Move placecuafix -Y(9) -X(9) +Z(1) /15 CP
+    Move placecuafix +Z(10) -Y(9) -X(9) +Z(1) /15 CP
+	Move pickcuafix +Z(10) +Z(1) /15 CP
+	Move pickcuafix +Z(1) /15
+	On 8
+	Wait 0.1
+	Move pickcuafix +Z(10) +Z(1) /15 CP
+Fend
+Function Pickcirs
+    Go pickcirculo +Z(10) /15 CP
+    Move pickcirculo -Z(Z_POS * tokenheight) +Z(2) /15
+	On 8
+	Wait 0.1
+	Move pickcirculo +Z(10) /15 CP
+Fend
+Function Placecircufixs
+	Go placecirfix +Z(1) +X(2) +Z(10) /15 CP
+	Move placecirfix +Z(1) +X(2) /15
+	Off 8
+	Wait 0.1
+	Move placecirfix -Y(9) +Z(1) +X(2) /15 CP
+	Move pickcirfix +Z(10) +Z(1) -X(1) +Y(1.5) /15 CP
+	Move pickcirfix +Z(1) -X(1) +Y(1.5) /15
+	On 8
+	Wait 0.1
+	Move pickcirfix +Z(10) +Z(1) -X(1) +Y(1.5) /15 CP
+Fend
+Function Placetraycus
+	Go placetrayorigin +Z(30) +X(Z_POS * 30) /15 CP
+	Move placetrayorigin +X(Z_POS * 30) +Z(2) /15 CP
+	Off 8
+	Wait 0.1
+	Move placetrayorigin +Z(30) +X(Z_POS * 30) /15 CP
+Fend
+Function Placetraycirs
+	Go placetrayorigin +Z(30) -Z(1) +Y(30) +X(Z_POS * 30) /15 CP
+	Move placetrayorigin +Y(30) -Z(1) +X(Z_POS * 30) /15 +Z(2) CP
+	Off 8
+	Wait 0.1
+	Move placetrayorigin +Z(30) -Z(1) +Y(30) +X(Z_POS * 30) /15 CP
+Fend
+Function Picktraycus
+    Go placetrayorigin -Z(1) +Z(30) +X(Z_POS * 30) /15 CP
+	Move placetrayorigin -Z(1) +X(Z_POS * 30) +Z(2) /15
+	On 8
+	Wait 0.1
+    Move placetrayorigin -Z(1) +Z(30) +X(Z_POS * 30) /15 CP
+Fend
+Function Picktraycirs
+	Go placetrayorigin +Z(30) +Y(30) +X(Z_POS * 30) /15 CP
+	Move placetrayorigin +Y(30) +X(Z_POS * 30) +Z(2) /15
+	On 8
+	Wait 0.1
+	Move placetrayorigin +Z(30) +Y(30) +X(Z_POS * 30) /15 CP
+Fend
+Function Placecus
+	Go pickcuadrado +Z(50) +Y(5) +X(5) /15 CP
+	Move pickcuadrado -Z(10) +Z(Z_POS * blockheight) /15
+	Off 8
+	Wait 0.1
+	Move pickcuadrado +Z(20) /15 CP
+Fend
+Function Placecirs
+	Go pickcirculo +Z(50) +Y(5) /15 CP
+	Move pickcirculo -Z(10) +Z(Z_POS * tokenheight) /15
+	Off 8
+	Wait 0.1
+	Move pickcirculo +Z(20) /15 CP
+Fend
