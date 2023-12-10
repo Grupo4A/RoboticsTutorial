@@ -1,0 +1,30 @@
+Function frmprueba_btnstart_Click(Sender$ As String)
+GSet frmprueba.btnstart.BackColor, "Green"
+Motor On
+Power High
+Xqt task3
+Fend
+
+Function frmprueba_btnstop_Click(Sender$ As String)
+GSet frmprueba.btnreset.BackColor, "Orange"
+GSet frmprueba.btnstart.BackColor, "Gray"
+Quit task3
+Off 8
+Wait 3
+Go initialpnt
+GSet frmprueba.btnreset.BackColor, "Gray"
+Fend
+
+Function frmprueba_btnpause_Click(Sender$ As String)
+GSet frmprueba.btnstop.BackColor, "Yellow"
+GSet frmprueba.btnstart.BackColor, "Gray"
+Pause
+Fend
+
+Function frmprueba_btncontinue_Click(Sender$ As String)
+GSet frmprueba.btncontinue.BackColor, "Blue"
+GSet frmprueba.btnstop.BackColor, "Gray"
+GSet frmprueba.btnstart.BackColor, "Green"
+Cont
+GSet frmprueba.btncontinue.BackColor, "Gray"
+Fend
