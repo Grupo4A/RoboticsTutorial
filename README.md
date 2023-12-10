@@ -1,3 +1,5 @@
+👩🏻🧑🏻🧔🏻‍♂️🧑🏻 GROUP 4A - ROBOTICS TUTORIAL 🤖⚙️🕹️
+
 Overview
 
 Here you can see the simulation and code implementation for 3 tasks performed at the EPSON Lab. The EPSON 6-axis robot is equipped with a vacuum nozzle for precise manipulations in the following tasks: 
@@ -30,18 +32,27 @@ This task is designed so that the robot operates on the located tokens from the 
 
 Task 3 introduces an enhanced pick and place operation for the Epson 6-axis robot, integrating a vacuum nozzle, pressure switch, cylinder piston and an I/O box for control. 
 
-✅♿  Objectives 
+✅ Objectives 
 
 	•	Dinamic detection of the quatity of tokens and blocks available in the feeder and the status of the tray using the pressure switch.
 	•	The detected information is maintained in the robot’s memory, enabling intelligent decision-making for efficient pick and place operations. 
-	•	To control the robot operation by I/O box, allowing functions as start, pause, rest and stop actions.
+	•	To control the robot operation by I/O box, allowing functions as start, pause, reset stop, clear and randomize actions.
 
 💡  Features
 
 	•	Dynamic Detection: The pressure switch is utilized to dynamically detect the quantity of tokens and blocks in the feeder, ensuring the robot is aware of the available resources.
 	•	Tray Status Monitoring: The pressure switch also monitors the status of the tray, determining whether it is available or occupied. This information is crucial for initiating the pick and place operation.
 	•	Memory Integration: Detected information is stored in the robot’s memory, allowing it to make informed decisions based on the current state of the environment.
- 	•	I/O Box Control: The robot’s operation is controlled by an I/O box, providing buttons for start, pause, reset, and stop actions. Each button is configured to perform the corresponding operation.
+ 	•	I/O Box Control: The robot’s operation is controlled by an I/O box, providing buttons for start, pause, reset, stop, clear and randomize actions. Each button is configured to perform the corresponding operation.
+
+🔴🟠🟢🔵⚪️🔴  I/O Box Control
+
+	•	🟢 Green latching push button: Starts Boosted Pick&Place Operation
+	•	🟠 Orange latching push button: Pauses operation. 
+	•	🔴 Red latching push button: Stops operation. 
+ 	•	🔵 Blue non-latchuing push button: CLears stage if a previous arrangement existed befor beggining the task. 
+ 	•	⚪️ White non-latchuing push button: Random setting, creates a random arramgement of tokens and blocks.
+  	•	🔴 Emergency stop signal: LED light flashes in the case of robot malfunctioning.
 
  🕹️ Operation
 
@@ -49,4 +60,5 @@ Task 3 introduces an enhanced pick and place operation for the Epson 6-axis robo
 	2.	Detection Phase: The robot uses the pressure switch to determine the quantity of tokens and blocks in the feeder and checks the status of the tray.
 	3.	Decision Making: Based on the detected information stored in memory, the robot awaits user input from the I/O box for start, pause, reset, or stop actions.
 	4.	Pick and Place Operation: The robot uses the vacuum nozzle to pick tokens and blocks and places them in the alingment tray, with the cylinder piston the feature is alinged. Once alinged the robot sistematocally places the token/block in the vacant space of the tray. The action is repeated until all available spaces are filled.
-  
+  	5.	Featured 'Clear' Operation: Upon activation of blue non-latching button the robot scans the tray and returns to the feeder any block and tocken, if any. 
+   	6.	Featured 'Random' Operation: Upon activation of white non-latching button the robot randomly places tokens and blocks on the tray. 
